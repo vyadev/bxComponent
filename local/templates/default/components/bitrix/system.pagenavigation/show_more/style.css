@@ -1,0 +1,15 @@
+.loadmore {
+	margin: 10px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	cursor: pointer;
+	text-align: center;
+}
+.loadmore_all-loaded {
+	color: red;
+	margin: 10px;
+	padding: 10px;
+	border: 1px dashed red;
+	cursor: pointer;
+	text-align: center;
+}

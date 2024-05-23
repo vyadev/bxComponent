@@ -234,9 +234,9 @@ function OnBeforePrologHandler()
 				CIBlockElement::SetPropertyValuesEx($_POST["id"], $_POST["iblock-id"], array("USERS_ID" => $usersId, "RATING" => $_POST["rating"]));
 
         // сбрасываем тегированный кэш для вывода свойств
-        if(defined("BX_COMP_MANAGED_CACHE") && is_object($GLOBALS['CACHE_MANAGER'])){
-          $GLOBALS['CACHE_MANAGER']->ClearByTag('votes_limit_users');
-        }
+        //if(defined("BX_COMP_MANAGED_CACHE") && is_object($GLOBALS['CACHE_MANAGER'])) {
+        // $GLOBALS['CACHE_MANAGER']->ClearByTag('votes_limit_users');
+        //}
 
 				$jsonObj["res"] = $_POST["rating"];
 				$jsonObj["voted"] = false;

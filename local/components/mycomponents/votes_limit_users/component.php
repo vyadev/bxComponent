@@ -8,27 +8,22 @@ if (!isset($arParams['CACHE_TIME']))
 {
     $arParams['CACHE_TIME'] = 3600;
 }
-
-// тип инфоблока
 $arParams['IBLOCK_TYPE'] = trim($arParams['IBLOCK_TYPE']);
-
-// идентификатор инфоблока
 $arParams['IBLOCK_ID'] = intval($arParams['IBLOCK_ID']);
-
-// количество элементов на страницу
 $arParams['ELEMENTS_PER_PAGE'] = intval($arParams['ELEMENTS_PER_PAGE']);
-if ($arParams['ELEMENTS_PER_PAGE'] <= 0) {
-  $arParams['ELEMENTS_PER_PAGE'] = 10;
+if ($arParams['ELEMENTS_PER_PAGE'] <= 0)
+{
+    $arParams['ELEMENTS_PER_PAGE'] = 10;
 }
 
-// запрещаем сохранение в сессии номера последней страницы
-CPageOption::SetOptionString('main', 'nav_page_in_session', 'N');
-
-// получаем параметры постраничной навигации, от которых будет зависеть кеш
 $arNavParams = array(
   "nPageSize" => $arParams["ELEMENTS_PER_PAGE"],
 );
+
 $arNavigation = CDBResult::GetNavParams($arNavParams);
+
+// запрещаем сохранение в сессии номера последней страницы
+CPageOption::SetOptionString('main', 'nav_page_in_session', 'N');
 
 if ($this->StartResultCache(false,/* $USER->GetGroups(),*/ $arNavigation))
 {
@@ -40,7 +35,7 @@ if ($this->StartResultCache(false,/* $USER->GetGroups(),*/ $arNavigation))
     return;
   }
 
-
+  
     // создаём свойство для рейтинга пользователя
     $PROPERTY_CODE = "RATING";
 
@@ -62,6 +57,7 @@ if ($this->StartResultCache(false,/* $USER->GetGroups(),*/ $arNavigation))
       );
       $ibp = new CIBlockProperty();
       $propID = $ibp->Add($arFields);
+
     }
 
 
@@ -90,7 +86,6 @@ if ($this->StartResultCache(false,/* $USER->GetGroups(),*/ $arNavigation))
     }
 
 
-
 	// выборка данных из инфоблока
 	$obNews = CIBlockElement::GetList(
 		array("ID" => "desc"),
@@ -112,6 +107,7 @@ if ($this->StartResultCache(false,/* $USER->GetGroups(),*/ $arNavigation))
  while ($resNews = $obNews->Fetch()) {
 	 $arResult["ELEMENTS"][] = $resNews;
  }
+
 
 
 // кастомная пагинация system.pagenavigation с шаблоном show_more_v2
@@ -138,7 +134,12 @@ if ($this->StartResultCache(false,/* $USER->GetGroups(),*/ $arNavigation))
 	 	"PROPERTY_RATING",*/
 	 ));
 
-	$this->includeComponentTemplate();
+	$this->includeComponentTemplate();	
+	
 }
 
 
+// сбрасываем тегированный кэш
+if (defined("BX_COMP_MANAGED_CACHE") && is_object($GLOBALS['CACHE_MANAGER'])) {
+  $GLOBALS['CACHE_MANAGER']->ClearByTag('votes_limit_users');
+}

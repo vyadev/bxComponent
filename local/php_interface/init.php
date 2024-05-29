@@ -22,9 +22,6 @@ function increaseCartCounter(\Bitrix\Main\Entity\Event $event)
     $currentCount = \CIBlockElement::GetProperty($catalogIblockId, $arItem["ID"], [], ["CODE" => "CART_COUNT"])->fetch();
     \CIBlockElement::SetPropertyValuesEx($arItem["ID"], $catalogIblockId, ['CART_COUNT' => $currentCount['VALUE'] + 1]);
   }
-
-//    $currentCount = \CIBlockElement::GetProperty($catalogIblockId, $fields['PRODUCT_ID'], [], ["CODE" => "CART_COUNT"])->fetch();
-//    \CIBlockElement::SetPropertyValuesEx($fields['PRODUCT_ID'], $catalogIblockId, ['CART_COUNT' => $currentCount['VALUE'] + 1]);
 }
 
 // при удалении товара - старые события и классы не работают
@@ -47,7 +44,6 @@ function decreaseCartCounter(\Bitrix\Main\Event $event)
     $currentCount = \CIBlockElement::GetProperty($catalogIblockId, $arItem["ID"], [], ["CODE" => "CART_COUNT"])->fetch();
     \CIBlockElement::SetPropertyValuesEx($arItem["ID"], $catalogIblockId, ['CART_COUNT' => $currentCount['VALUE'] - 1]);
   }
-
 }
 
 
@@ -72,10 +68,6 @@ function onSaleOrderSaved(\Bitrix\Main\Event $event)
     $names[] = $basketItem->getField('NAME');
   }
 
-//    $item = $basketItems[0];
-//    $prodId = $item->getField('PRODUCT_ID');
-//    $name = $item->getField('NAME');
-
   $res = \Bitrix\Iblock\ElementTable::getList(array(
     'order' => array('SORT' => 'ASC'),
     'select' => array('ID'),
@@ -91,12 +83,6 @@ function onSaleOrderSaved(\Bitrix\Main\Event $event)
     $currentCount = \CIBlockElement::GetProperty($catalogIblockId, $id, [], ["CODE" => "ORDER_COUNT"])->fetch();
     \CIBlockElement::SetPropertyValuesEx($id, $catalogIblockId, ['ORDER_COUNT' => $currentCount['VALUE'] + 1]);
   }
-
-//    $currentCount = \CIBlockElement::GetProperty($catalogIblockId, $prodId, [], ["CODE" => "ORDER_COUNT"])->fetch();
-//    \CIBlockElement::SetPropertyValuesEx($prodId, $catalogIblockId, ['ORDER_COUNT' => $currentCount['VALUE'] + 1]);
-
-//    $currentCount = \CIBlockElement::GetProperty($catalogIblockId, $prodId, [], ["CODE" => "ORDER_COUNT"])->fetch();
-//    \CIBlockElement::SetPropertyValuesEx($prodId, $catalogIblockId, ['ORDER_COUNT' => $currentCount['VALUE'] + 1]);
 }
 
 
@@ -113,7 +99,7 @@ function BeforeResultAddHandler($WEB_FORM_ID, &$arFields, &$arrVALUES)
     $result = $httpClient->post(
       'https://www.google.com/recaptcha/api/siteverify',
       array(
-        'secret' => '6LdsF-spAAAAAOE7Q4n2QdjwaaVzAcd93q5Eech1',
+        'secret' => '', // secret key here
         'response' => $_REQUEST['g-recaptcha-response'],
         'remoteip' => $_SERVER['HTTP_X_REAL_IP']
       )
@@ -241,11 +227,6 @@ function OnBeforePrologHandler()
 				array_push($usersId, $userid);
 
 				CIBlockElement::SetPropertyValuesEx($_POST["id"], $_POST["iblock-id"], array("USERS_ID" => $usersId, "RATING" => $_POST["rating"]));
-
-        // сбрасываем тегированный кэш для вывода свойств
-//        if(defined("BX_COMP_MANAGED_CACHE") && is_object($GLOBALS['CACHE_MANAGER'])) {
-//          $GLOBALS['CACHE_MANAGER']->ClearByTag('votes_limit_users');
-//        }
 
 				$jsonObj["res"] = $_POST["rating"];
 				$jsonObj["voted"] = false;

@@ -25,7 +25,7 @@ $arNavigation = CDBResult::GetNavParams($arNavParams);
 // запрещаем сохранение в сессии номера последней страницы
 CPageOption::SetOptionString('main', 'nav_page_in_session', 'N');
 
-if ($this->StartResultCache(false,/* $USER->GetGroups(),*/ $arNavigation))
+if ($this->StartResultCache(false, $arNavigation))
 {
 
   if(!Loader::includeModule("iblock"))
@@ -35,12 +35,6 @@ if ($this->StartResultCache(false,/* $USER->GetGroups(),*/ $arNavigation))
     return;
   }
 
-  // проверяем пришли ли данные из формы
-//  if ($_SERVER["REQUEST_METHOD"] == "POST" &&
-//    array_key_exists("rating", $_POST) && intval($_POST["rating"]) > 0 &&
-//    array_key_exists("id", $_POST) && intval($_POST["id"]) > 0 &&
-//    array_key_exists("iblock-id", $_POST) && intval($_POST["iblock-id"]) > 0)
-//  {
 
     // создаём свойство для рейтинга пользователя
     $PROPERTY_CODE = "RATING";

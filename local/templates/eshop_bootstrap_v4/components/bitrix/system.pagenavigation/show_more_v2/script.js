@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function() {
               })
               targetContainer.insertAdjacentHTML('beforeEnd', pagination.outerHTML);
 
-
               // дополнительно - класс для всех подгруженных элементов, кроме последнего
               let targetCnt = targetContainer.querySelectorAll('.loadmore-item').length
               let targetElems = document.querySelectorAll('.news-item')

@@ -40,11 +40,6 @@ if ($this->StartResultCache(false, $arNavigation))
   }
 
 
-  // проверяем пришли ли данные из формы
-//  if (isset($_POST["id"]) && isset($_POST["rating"])) {
-//    $ELEMENT_ID = $_POST["id"];
-//    $PROPERTY_VALUE = $_POST["rating"];
-
     // создаём свойство для рейтинга пользователя
     $PROPERTY_CODE = "RATING";
 
@@ -65,7 +60,6 @@ if ($this->StartResultCache(false, $arNavigation))
       );
       $ibp = new CIBlockProperty();
       $propID = $ibp->Add($arFields);
-      //CIBlockElement::SetPropertyValues($ELEMENT_ID, $arParams['IBLOCK_ID'], $PROPERTY_VALUE, $PROPERTY_CODE);
 
       // иначе - заполняем данными из формы
     } else if (isset($_POST["id"]) && isset($_POST["rating"])) {
